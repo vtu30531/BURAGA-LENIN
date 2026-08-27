@@ -1,0 +1,66 @@
+Java Dequeue
+
+https://www.hackerrank.com/challenges/java-dequeue/problem
+program:
+import java.util.*;
+
+public class test {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        Deque<Integer> deque = new ArrayDeque<>();
+        Map<Integer, Integer> map = new HashMap<>();
+        
+        int n = in.nextInt();
+        int m = in.nextInt();
+        int maxUnique = 0;
+
+        for (int i = 0; i < n; i++) {
+            int num = in.nextInt();
+            
+            // Add element to deque
+            deque.add(num);
+            
+            // Update frequency map (Java 7 compatible)
+            Integer count = map.get(num);
+            if (count == null) {
+                map.put(num, 1);
+            } else {
+                map.put(num, count + 1);
+            }
+            
+            // When window size reaches M
+            if (deque.size() == m) {
+                // Update max unique count
+                if (map.size() > maxUnique) {
+                    maxUnique = map.size();
+                }
+                
+                // Early exit optimization
+                if (maxUnique == m) {
+                    break;
+                }
+                
+                // Remove oldest element
+                int first = deque.removeFirst();
+                int currentCount = map.get(first);
+                
+                if (currentCount == 1) {
+                    map.remove(first);
+                } else {
+                    map.put(first, currentCount - 1);
+                }
+            }
+        }
+        
+        System.out.println(maxUnique);
+        in.close();
+    }
+}
+output:
+put (stdin)
+6 3
+5 3 5 2 3 2
+Your Output (stdout)
+3
+Expected Output
+3
