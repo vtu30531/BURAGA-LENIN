@@ -1,0 +1,65 @@
+https://www.hackerrank.com/challenges/string-similarity/ 
+
+program:
+
+import java.util.*;
+
+public class Solution {
+
+    public static long stringSimilarity(String s) {
+        int n = s.length();
+
+        long result = n;
+
+        int[] z = new int[n];
+
+        int left = 0;
+        int right = 0;
+
+        for (int i = 1; i < n; i++) {
+
+            if (i <= right) {
+                z[i] = Math.min(right - i + 1, z[i - left]);
+            }
+
+            while (i + z[i] < n &&
+                   s.charAt(z[i]) == s.charAt(i + z[i])) {
+                z[i]++;
+            }
+
+            if (i + z[i] - 1 > right) {
+                left = i;
+                right = i + z[i] - 1;
+            }
+
+            result += z[i];
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int t = sc.nextInt();
+
+        while (t-- > 0) {
+            String s = sc.next();
+            System.out.println(stringSimilarity(s));
+        }
+
+        sc.close();
+    }
+}
+
+output:
+
+Input (stdin)
+2
+ababaa
+aa
+Expected Output
+11
+
+

@@ -1,0 +1,19 @@
+https://leetcode.com/problems/rotate-string/ 
+
+program:
+
+class Solution {
+    public boolean rotateString(String s, String goal) {
+        return s.length() == goal.length() && (s + s).contains(goal);
+    }
+}
+
+output:
+
+Input
+s ="m"
+goal ="f"
+Output
+false
+Expected
+false
